@@ -1,41 +1,31 @@
-import React, { Component } from 'react'
-import {connect} from 'react-redux'
-import PropTypes from 'prop-types'
-import {fetchTopRatedMovies} from '../store/actions'
-
-
+import React, { useState , useEffect} from 'react'
+import {useDispatch, useSelector ,connect } from 'react-redux'
+import {fetchTopRatedMovies,getMovies} from '../store/actions'
 import logo from './logo.svg'
 import './MovieLibrary.css'
-import {getMovies} from '../store/selectors'
 import MoviesList from './MoviesList'
 
-class MovieLibrary extends Component {
 
-  static propTypes = {
-
-  }
-
-  componentDidMount() {
-    const {fetchTopRatedMovies} = this.props
-    fetchTopRatedMovies()
-  }
-
-  render() {
-    const {movies} = this.props
-    return (
-      <div className="MovieLibrary">
+export default function MovieLibrary() { 
+ 
+  const dispatch = useDispatch()
+  const movies = useSelector(state => state.movieLib.movies) 
+  const [local, setLocal] = useState([])
+  useEffect(() => {
+   dispatch(getMovies(200)) 
+  },[]) 
+   console.log(movies)
+  
+   return (
+    
+    <div className="MovieLibrary">
         <header className="ML-header">
           <img src={logo} className="ML-logo" alt="logo" />
           <h1 className="ML-title">Movies</h1>
         </header>
         <div className="ML-intro">
-          { movies.length && <MoviesList movies={movies}/> }
+          { movies ? <MoviesList movies={movies}/> : <h1>Without movies</h1>}
         </div>
       </div>
     );
-  }
 }
-
-export default connect(state => ({
-  movies: getMovies(state)
-}), {fetchTopRatedMovies})(MovieLibrary)

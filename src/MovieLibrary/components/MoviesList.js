@@ -1,6 +1,5 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import classNames from 'classnames'
+import styled from 'styled-components'
 import TMDBImage from './TMDBImage'
 import MovieListItem from './movieListItem'
 import './MoviesList.css'
@@ -9,22 +8,45 @@ export default function MoviesList({movies}) {
 
 
     return (
-      <div className="movies-list">
-        <div className="items">
+      <Container>
           <div>
             <span>Sort by:</span>
             
           </div>
+        <Movies>
           {
             movies.map(movie =>
-              <MovieListItem key={movie.id} movie={movie.title}/>
+              <MovieListItem key={movie.id} movie={movie}/>
             )
           }
-        </div>
+        </Movies>
        
-      </div>
+      </Container>
     )
   }
+
+
+  const Container = styled.div`
+  display:flex;
+  flex-direction:row;
+  flex-wrap:wrap;
+  justify-content:center;
+  align-items:center;
+  width: 100%;
+  
+  `;
+
+const Movies = styled.div`
+display:flex;
+flex-direction:row;
+flex-wrap:wrap;
+justify-content:center;
+align-items:center;
+width: 100%;
+`;
+
+
+
 
 
 const ExpandedMovieItem = ({movie: {title, original_title, poster_path, overview, vote_average, vote_count}}) => (

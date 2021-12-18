@@ -1,28 +1,24 @@
 import {FETCH_MOVIES} from '../../actionTypes'
-import topRatedMovies from '../mocks/topTatedMovies'
 import axios from 'axios'
-export function fetchTopRatedMovies() {
-  return function (dispatch) {
-    fetch('https://api.themoviedb.org/3/movie/now_playing?api_key=54ffed57deb5a7a8688be4de3007e578')
-    .then(response => response.json())
-    .then(json =>{
-        dispatch({type:FETCH_MOVIES, payload:json.results})       
-    })
-    
-}
-}
 
 
-export function getMovies(number){
-  
+export function getMovies(number){  
   return(dispatch)=>{
     movies(number).then(response => {
-      dispatch({type:FETCH_MOVIES, payload:response})   })
-
+      dispatch({type:FETCH_MOVIES, payload:response})})
   } 
-
 }
 
+export function loadMovies(pag){
+  return (dispatch)=>{
+    fetch(`https://api.themoviedb.org/3/movie/now_playing?api_key=54ffed57deb5a7a8688be4de3007e578&page=${pag}`)
+    .then(response => response.json())
+    .then(json => {
+      dispatch({type:'LOAD', payload:json})
+    })
+  }
+}
+  
 
 const movies = async (num) =>{
   
@@ -40,12 +36,17 @@ const movies = async (num) =>{
   }  
   let arr = Promise.all(total)  
   .then((r)=> {
-    r.flat()       
-    let resultado = r.map(r => r.data.results).flat()
-    console.log(resultado)
-    return resultado})
+    r.flat()     
+    
+    let result = r.map(r => r.data.results).flat()
+    result = result.filter(e => e.backdrop_path !== null)
+    return result})
   const finals = await arr 
   return finals
- 
 }   
 
+export function sort(payload){
+return{
+  type:'SORT', payload
+}
+}

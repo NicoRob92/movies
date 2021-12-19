@@ -1,15 +1,35 @@
-import React, {useState} from 'react'
-import {useSelector} from 'react-redux'
+import React, {useState, useEffect} from 'react'
+import {useSelector,useDispatch} from 'react-redux'
 import styled from 'styled-components'
+import {getMovies} from '../store/actions'
 import MovieListItem from './movieListItem'
-import './MoviesList.css'
 import arrow from "./Arrow.svg"
 
-export default function MoviesList({movies}) {
+export default function MoviesList({movies,order}) {
   const [show,setShow] = useState(true)
-  const [movie,setMovie] = useState({})
+  const [movie,setMovie] = useState({}) 
   const mov = useSelector(state => state.movieLib.movies)
-  // [{id: x} , {}, {}]
+  
+    if(order === 'A-Z'){
+      movies = movies.sort((a,b) => {if(a.title < b.title ) return -1
+      if(a.title > b.title ) return 1;
+      return 0})
+    }
+    if(order === 'Z-A'){
+      movies = movies.sort((a,b) => {if(a.title > b.title ) return -1
+      if(a.title < b.title ) return 1;
+      return 0})
+    }
+    if(order === 'high'){
+      movies = movies.sort((a,b)=> a.popularity-b.popularity)
+    } 
+    if(order === 'low'){
+      movies = movies.sort((a,b)=> b.popularity-a.popularity)
+    }
+    else if(order === ''){     
+      movies = movies.sort((a,b)=> a.id-b.id)
+    }
+
 
   function handleModal(id, dir) {
     let found = mov.find(e => e.id === id)
@@ -26,9 +46,35 @@ export default function MoviesList({movies}) {
   function handleClickClose(){ 
        setShow(!show)           
       }
+      const cardsOnScreen  =  document.querySelectorAll('.cards')
+      const observer = new IntersectionObserver((entry)=>{
+          entry.forEach(e=>{
+              if(e.isIntersecting){
+                  e.target.classList.add('visible')
+              }
+              else{
+                e.target.classList.remove('visible')
+              }
+          })
+  
+      },{
+          rootMargin: '100px 0px 100px 0px', 
+          threshold: .5
+      })
+      
+      if(cardsOnScreen){
+        cardsOnScreen.forEach(entry=> observer.observe(entry))
+      }
+
+
+    
+
+
+
+   
     return (
-      <Container>        
-        <Movies id="prueba">
+      <Container id="container">        
+        <Movies id="test">
           {
             movies.map(movie =>
               <MovieListItem key={movie.id} movie={movie} onClick={()=> handleClickOpen(movie)} />
@@ -41,10 +87,11 @@ export default function MoviesList({movies}) {
          <ButtonLeft onClick={()=> handleModal(movie.id, "left")} style={{backgroundImage: `url(${arrow})`}}></ButtonLeft>
         <CenterInfo>
             <TitleMovie>{movie.title?.length > 24 ? movie.title.slice(0, 21) + "..." : movie.title}</TitleMovie> 
-           <Img onClick={()=> handleClickClose()} id ={movie.id} style={{backgroundImage: `url(https://image.tmdb.org/t/p/original/${movie.poster_path})`}}>
-              {/* <Classification>{movie.adult === true ? "+18" : "APT"}</Classification> */} 
+            <Img onClick={()=> handleClickClose()} id ={movie.id} style={{backgroundImage: `url(https://image.tmdb.org/t/p/original/${movie.poster_path})`}}>
+              <Classification>{movie.adult === true ? "+18" : "APT"}</Classification>
             </Img>
-              <Paragraph>{movie.overview?.length > 354 ? movie.overview.slice(0, 354) + "..." : movie.overview}</Paragraph>
+            <Paragraph>{movie.overview?.length > 354 ? movie.overview.slice(0, 354) + "..." : movie.overview}</Paragraph>
+            <Date>Release date: {movie.release_date}</Date>
         </CenterInfo>
          <ButtonRight onClick={()=> handleModal(movie.id, "right")} style={{backgroundImage: `url(${arrow})`}}></ButtonRight>
          </ModalInside>
@@ -73,9 +120,18 @@ flex-direction:row;
 flex-wrap:wrap;
 justify-content:center;
 align-items:center;
+min-height:85%;
 width: 90%;
-height: 100%;
-background-color:rgba(0,0,0,.3)
+height: 85vh;
+box-shadow: 6px 8px 25px -3px rgba(0,0,0,0.8);
+backdrop-filter: blur(4px);
+border-radius: 4px;
+overflow-y: scroll;
+box-shadow: inset 0px 0px 28px 3px rgba(0,0,0,0.5);
+
+&::-webkit-scrollbar{
+  display:none;
+}
 
 `;
 const Modal = styled.div`
@@ -95,7 +151,7 @@ const Img = styled.div`
 /* position: relative;
 top:20%; */
 display: flex;
-width:100%;
+width:90%;
 height:80%;
 background-color:rgba(0,0,0);
 color: white;
@@ -104,6 +160,8 @@ background-image: url("https://image.tmdb.org/t/p/original/"+{movie.poster_path}
 background-size: 100% 100%;
 background-repeat: no-repeat;
 background-position:center;
+box-shadow: 6px 8px 25px 0px rgba(0,0,0,0.3);
+transition:.4s;
 `;
 
 const ModalInside = styled.div`
@@ -135,6 +193,15 @@ font-family: 'Roboto', sans-serif;
   z-index: 3;
 
 `;
+
+const Date = styled.p`
+font-family: 'Roboto', sans-serif;
+position:relative;
+top: -10%;
+left: 30%;
+zIndex: 4;
+color: white`;
+
 const TitleMovie = styled.h2`
 font-family: 'Bebas Neue', cursive;
   font-size: 45px;
@@ -150,8 +217,8 @@ const Classification = styled.p`
   font-family: 'Anton', sans-serif;
   width: 80%;
   color: white;
-  position: relative;
-  left: 18.5%;
+  position: absolute;
+  left: 25.5%;
   justify-content:flex-end;
 `;
 
@@ -166,6 +233,11 @@ border: none;
 background-size: contain;
 background-repeat: no-repeat;
 transform: rotate(180deg);
+transition:.4s;
+&:hover{
+  transition:.4s;
+   transform:scale(1.1) rotate(180deg);
+}
 `;
 const ButtonRight = styled.button`
 width: 10%;
@@ -176,6 +248,11 @@ background: transparent;
 border: none; 
 background-size: contain;
 background-repeat: no-repeat;
+transition:.4s;
+&:hover{
+  transform:scale(1.1);
+  transition:.4s;
+}
 `;
 
 

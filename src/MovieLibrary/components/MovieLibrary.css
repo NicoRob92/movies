@@ -2,37 +2,117 @@
   text-align: center;
   height: 100vh;
   width: 100vw;
-    
+  background-color: rgba(0,0,0,.9)
   
 }
 
 .ML-logo {
   position: relative;
-  left:-5%;
+  left:-3%;
   height: 100%;
 }
 
 .ML-header {
-  background-color: #4D27DC;
+  background-color: rgba(77, 39, 220, .3);
   height: 4%;
   padding: 20px;
   color: white;
   display:flex;
   justify-content:space-around;
   align-items:center;
-
+  border-bottom: solid 1px black;
+  margin-bottom:2%;
+  box-shadow: 6px 8px 25px -3px rgba(0,0,0,0.4);
+  backdrop-filter: blur(2px);
 }
 
 .ML-title {
-  font-size: 1.8em;
-  font-family: Fieldwork, Arial, san-serif !important;
+  position: relative;
+  left:3%;
+  font-size: 2.4em;
+  font-family: 'Gruppo', cursive;
+  
 }
 
 .ML-intro {
   font-size: large;
 }
 
-@keyframes ML-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(720deg); }
+.sort{
+  position: relative;
+  right: -4%;
+  width:17%;
+  font-family: 'Gruppo', cursive;
+  display: flex;
+  align-items:center;
 }
+.sort select{
+  margin-left:4%;
+  border:none;
+  outline: none;
+  font-family: 'Gruppo', cursive;
+  font-weight: 400;
+  color:black;
+}
+
+
+.pelispedia{
+  font-family: 'Gruppo', cursive;
+  /* font-family: 'Ceviche One', cursive; */
+  /* font-family: 'Gochi Hand', cursive; */
+ /*  font-family: 'Henny Penny', cursive; */
+ font-size: 10rem;
+ transform: rotate(-20deg);
+ color: #fff;
+ text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 200px #ff5002, 0 0 30px #ff5002, 0 0 40px #ff5002, 0 0 55px #ff5002, 0 0 75px #ff5002;
+ white-space: nowrap;
+ position: absolute;
+ top:40%;
+ left:20%;
+ z-index: 0;
+}
+
+.pelispedia .ped{
+  animation-name: luz;
+  animation-duration: 4s;
+  animation-iteration-count: infinite;
+  animation-timing-function: step-start;
+}
+
+
+
+.pelispedia .a{
+  animation-name: a;
+  animation-duration: 4s;
+  animation-iteration-count: infinite;
+  animation-timing-function: step-start;
+}
+
+@keyframes a{
+  0%{ text-shadow: 0 0 10px #000,0 0 5px #000,0 0 40px #000;}
+  1%{text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 20px #ff5002, 0 0 30px #ff5002, 0 0 40px #ff5002, 0 0 55px #ff5002, 0 0 75px #ff5002;}
+  20%{ text-shadow: 0 0 10px #000,0 0 5px #000,0 0 40px #000;}
+  21%{text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 20px #ff5002, 0 0 30px #ff5002, 0 0 40px #ff5002, 0 0 55px #ff5002, 0 0 75px #ff5002;}
+  30%{ text-shadow: 0 0 10px #000,0 0 5px #000,0 0 40px #000;}
+  31%{text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 20px #ff5002, 0 0 30px #ff5002, 0 0 40px #ff5002, 0 0 55px #ff5002, 0 0 75px #ff5002;}
+  50%{ text-shadow: 0 0 10px #000,0 0 5px #000,0 0 40px #000;}
+  51%{text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 20px #ff5002, 0 0 30px #ff5002, 0 0 40px #ff5002, 0 0 55px #ff5002, 0 0 75px #ff5002;}
+  90%{ text-shadow: 0 0 10px #000,0 0 5px #000,0 0 40px #000;}
+  97%{text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 20px #ff5002, 0 0 30px #ff5002, 0 0 40px #ff5002, 0 0 55px #ff5002, 0 0 75px #ff5002;}
+  
+}
+
+@keyframes luz{
+  0%{ text-shadow: 0 0 10px #000,0 0 5px #000,0 0 40px #000;}
+  1%{text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 20px #ff5002, 0 0 30px #ff5002, 0 0 40px #ff5002, 0 0 55px #ff5002, 0 0 75px #ff5002;}
+  15%{ text-shadow: 0 0 10px #000,0 0 5px #000,0 0 40px #000;}
+  23%{text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 20px #ff5002, 0 0 30px #ff5002, 0 0 40px #ff5002, 0 0 55px #ff5002, 0 0 75px #ff5002;}
+  30%{ text-shadow: 0 0 10px #000,0 0 5px #000,0 0 40px #000;}
+  31%{text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 20px #ff5002, 0 0 30px #ff5002, 0 0 40px #ff5002, 0 0 55px #ff5002, 0 0 75px #ff5002;}
+  55%{ text-shadow: 0 0 10px #000,0 0 5px #000,0 0 40px #000;}
+  58%{text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 20px #ff5002, 0 0 30px #ff5002, 0 0 40px #ff5002, 0 0 55px #ff5002, 0 0 75px #ff5002;}
+  70%{ text-shadow: 0 0 10px #000,0 0 5px #000,0 0 40px #000;}
+  97%{text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 20px #ff5002, 0 0 30px #ff5002, 0 0 40px #ff5002, 0 0 55px #ff5002, 0 0 75px #ff5002;}
+  
+}
+

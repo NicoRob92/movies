@@ -1,8 +1,18 @@
-@import url('https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=EB+Garamond:wght@500&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=EB+Garamond:wght@500&family=Gruppo&family=Michroma&family=Sriracha&display=swap');
+/* font-family: 'Anton', sans-serif;
+font-family: 'Bebas Neue', cursive;
+font-family: 'EB Garamond', serif;
+font-family: 'Gruppo', cursive;
+font-family: 'Michroma', sans-serif;
+font-family: 'Sriracha', cursive */
 body {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
   width: 100vw;
   height:100vh;  
+  background-image: url('https://www.muralunique.com/wp-content/uploads/2020/02/1409_V.jpg');
+  overflow: hidden;
+  scroll-behavior: smooth;
 }
